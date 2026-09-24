@@ -1,16 +1,10 @@
 <?php
 
-/**
- * Built by Bagas (Baprade)
- * AuthController: Google SSO Controller with OAuth & SQLite Session - 29 Jul 2026
- */
-
 namespace App\Http\Controllers;
 
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -21,16 +15,12 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    /**
-     * Redirect to Google OAuth Consent screen or Dev Demo login if keys are missing.
-     */
     public function redirectToGoogle(Request $request)
     {
         $clientId = config('services.google.client_id');
         $redirectUri = config('services.google.redirect');
 
         if (empty($clientId)) {
-            // Fallback for instant testing before Google API Console keys are inserted
             return redirect()->route('auth.demo');
         }
 
@@ -46,9 +36,6 @@ class AuthController extends Controller
         return redirect('https://accounts.google.com/o/oauth2/v2/auth?' . $query);
     }
 
-    /**
-     * Handle Google OAuth Callback.
-     */
     public function handleGoogleCallback(Request $request)
     {
         $code = $request->query('code');
@@ -61,7 +48,6 @@ class AuthController extends Controller
             $clientSecret = config('services.google.client_secret');
             $redirectUri = config('services.google.redirect');
 
-            // Exchange code for Google Access Token
             $response = Http::post('https://oauth2.googleapis.com/token', [
                 'code' => $code,
                 'client_id' => $clientId,
@@ -81,7 +67,6 @@ class AuthController extends Controller
                 return redirect()->route('home')->with('error', 'Google Token tidak valid.');
             }
 
-            // Fetch User Profile from Google UserInfo API
             $userProfileResponse = Http::withToken($accessToken)->get('https://www.googleapis.com/oauth2/v3/userinfo');
 
             if ($userProfileResponse->failed()) {
@@ -98,9 +83,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * 1-Click Quick Demo SSO Login (Convenient testing & preview mode).
-     */
     public function devLogin(Request $request)
     {
         $mockUser = $this->authService->findOrCreateGoogleUser([
@@ -115,9 +97,6 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Berhasil login SSO sebagai ' . $mockUser->name);
     }
 
-    /**
-     * Logout user session.
-     */
     public function logout(Request $request)
     {
         $this->authService->logout();

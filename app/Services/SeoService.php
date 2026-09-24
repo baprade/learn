@@ -1,20 +1,9 @@
 <?php
 
-/**
- * Built by Bagas (Baprade)
- * Day 2: God-Level SEO Structured Data Generator (Course, LearningResource, TechArticle) - 27 Jul 2026
- */
-
 namespace App\Services;
 
 class SeoService
 {
-    /**
-     * Generate Schema.org JSON-LD structured data for Learn Baprade.
-     *
-     * @param array|null $challenge
-     * @return string
-     */
     public function generateJsonLd(?array $challenge = null): string
     {
         $baseUrl = config('learn_seo.canonical_url', 'https://learn.baprade.my.id/');
@@ -31,8 +20,8 @@ class SeoService
             [
                 '@type' => 'Course',
                 '@id' => $baseUrl . '#course',
-                'name' => 'Belajar Coding PHP Pemula & Interactive Code Sandbox',
-                'description' => 'Kursus & platform latihan belajar coding PHP pemula terlengkap secara gratis dari nol. Melatih logic, syntax, array, OOP, dan SOLID principles.',
+                'name' => 'Belajar Coding PHP & SQL Interaktif',
+                'description' => 'Platform latihan interaktif PHP & SQL dari nol. Melatih logic, syntax, query database, array, OOP, dan arsitektur modular.',
                 'provider' => [
                     '@type' => 'Person',
                     'name' => 'Bagas (Baprade)',
@@ -41,7 +30,6 @@ class SeoService
                 'hasCourseInstance' => [
                     '@type' => 'CourseInstance',
                     'courseMode' => 'online',
-                    'courseWorkload' => 'PT10H',
                 ],
             ]
         ];
@@ -50,11 +38,10 @@ class SeoService
             $graph[] = [
                 '@type' => 'LearningResource',
                 '@id' => $baseUrl . 'challenge/' . $challenge['slug'] . '#resource',
-                'name' => $challenge['title_id'] . ' - Belajar Coding PHP Pemula',
+                'name' => $challenge['title_id'],
                 'description' => $challenge['description_id'],
                 'learningResourceType' => 'Interactive Coding Exercise',
                 'educationalLevel' => $challenge['difficulty'],
-                'educationalUse' => 'Practice Coding',
                 'inLanguage' => 'id-ID',
                 'author' => [
                     '@type' => 'Person',

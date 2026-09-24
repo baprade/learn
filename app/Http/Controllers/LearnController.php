@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Built by Bagas (Baprade)
- * Day 2: Learn Controller & Challenge Evaluator Routes - 27 Jul 2026
- */
-
 namespace App\Http\Controllers;
 
 use App\Services\ChallengeService;
@@ -19,9 +14,6 @@ class LearnController extends Controller
     protected CodeEvaluatorService $evaluatorService;
     protected SeoService $seoService;
 
-    /**
-     * Constructor Dependency Injection following SOLID principles.
-     */
     public function __construct(
         ChallengeService $challengeService,
         CodeEvaluatorService $evaluatorService,
@@ -32,9 +24,6 @@ class LearnController extends Controller
         $this->seoService = $seoService;
     }
 
-    /**
-     * Display main learning platform home page with challenge listing (Public preview allowed).
-     */
     public function index()
     {
         $seo = config('learn_seo');
@@ -44,11 +33,6 @@ class LearnController extends Controller
         return view('index', compact('seo', 'challenges', 'jsonLd'));
     }
 
-    /**
-     * Display individual interactive challenge page (Public preview allowed).
-     *
-     * @param string $slug
-     */
     public function show(string $slug)
     {
         $seo = config('learn_seo');
@@ -63,15 +47,8 @@ class LearnController extends Controller
         return view('challenge', compact('seo', 'challenge', 'jsonLd'));
     }
 
-    /**
-     * Run and evaluate user code submission via POST API endpoint (Google SSO Login Required).
-     *
-     * @param Request $request
-     * @param string $slug
-     */
     public function evaluate(Request $request, string $slug)
     {
-        // 1. Google SSO Authentication Guard for Code Execution
         if (!Auth::check()) {
             return response()->json([
                 'status' => 'unauthenticated',
@@ -101,7 +78,7 @@ class LearnController extends Controller
                 ], 404);
             }
 
-            $evaluation = $this->evaluatorService->evaluate($validated['code'], $challenge['test_cases']);
+            $evaluation = $this->evaluatorService->evaluateChallenge($validated['code'], $challenge);
 
             return response()->json($evaluation);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -125,9 +102,6 @@ class LearnController extends Controller
         }
     }
 
-    /**
-     * Generate dynamic sitemap.xml for learn.baprade.my.id.
-     */
     public function sitemap()
     {
         $baseUrl = config('learn_seo.canonical_url', 'https://learn.baprade.my.id/');
@@ -137,7 +111,6 @@ class LearnController extends Controller
         $xml = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
         
-        // Homepage URL
         $xml .= '<url>';
         $xml .= '<loc>' . htmlspecialchars($baseUrl) . '</loc>';
         $xml .= '<lastmod>' . $now . '</lastmod>';
@@ -145,7 +118,6 @@ class LearnController extends Controller
         $xml .= '<priority>1.0</priority>';
         $xml .= '</url>';
 
-        // Challenge URLs
         foreach ($challenges as $ch) {
             $xml .= '<url>';
             $xml .= '<loc>' . htmlspecialchars(rtrim($baseUrl, '/') . '/challenge/' . $ch['slug']) . '</loc>';
@@ -162,9 +134,6 @@ class LearnController extends Controller
         ]);
     }
 
-    /**
-     * Generate dynamic robots.txt.
-     */
     public function robots()
     {
         $baseUrl = config('learn_seo.canonical_url', 'https://learn.baprade.my.id/');

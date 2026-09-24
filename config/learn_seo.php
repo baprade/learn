@@ -1,15 +1,10 @@
 <?php
 
-/**
- * Built by Bagas (Baprade)
- * Learn Baprade SEO Configuration - 29 Jul 2026
- */
-
 return [
-    'site_name' => 'Learn Baprade — Belajar Coding PHP Pemula & Code Sandbox',
-    'title' => 'Belajar Coding PHP Pemula & Interactive Code Sandbox — Learn Baprade',
-    'description' => 'Tempat belajar coding PHP pemula paling interaktif. Latihan syntax dasar, array, fungsi, OOP, dan SOLID principles gratis dengan instant test runner & penjelasan mudah dipahami.',
-    'keywords' => 'belajar coding php pemula, belajar php dari nol, tutorial php pemula gratis, latihan koding php online, php code sandbox, cara belajar php interaktif, solid principles php, belajar oop php, learn php online, bagas baprade',
+    'site_name' => 'Learn Baprade — Platform Latihan Coding PHP & SQL Interaktif',
+    'title' => 'Belajar Coding PHP & SQL Interaktif — Learn Baprade',
+    'description' => 'Platform latihan coding PHP dan SQL interaktif dari dasar hingga mahir. Latihan query database, manipulasi array, logika pemrograman, dan clean code langsung di browser.',
+    'keywords' => 'belajar sql pemula, latihan query database sql online, belajar php pemula, php code sandbox, sql interactive runner, belajar oop php, solid principles, bagas baprade',
     'author' => 'Bagas (Baprade)',
     'canonical_url' => 'https://learn.baprade.my.id/',
     'whatsapp' => '6281283141448',
