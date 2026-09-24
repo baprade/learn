@@ -39,7 +39,7 @@ class SeoService
                 '@type' => 'LearningResource',
                 '@id' => $baseUrl . 'challenge/' . $challenge['slug'] . '#resource',
                 'name' => $challenge['title_id'],
-                'description' => $challenge['description_id'],
+                'description' => $challenge['summary_id'] ?? $challenge['title_id'],
                 'learningResourceType' => 'Interactive Coding Exercise',
                 'educationalLevel' => $challenge['difficulty'],
                 'inLanguage' => 'id-ID',

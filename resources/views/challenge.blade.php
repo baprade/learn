@@ -9,8 +9,41 @@
     showHint: false,
     showSolution: false,
     showAuthModal: false,
+    magicTooltip: false,
     solvedSlugs: JSON.parse(localStorage.getItem('learn_solved_challenges') || '[]'),
     
+    // Magic Beautifier Feature (Clean Indentation & Spacing)
+    beautifyCode() {
+        if (!this.code) return;
+        let lines = this.code.split('\n');
+        let formatted = [];
+        let indent = 0;
+        const tab = '    '; // 4 spaces indentation
+
+        for (let line of lines) {
+            let trimmed = line.trim();
+            if (!trimmed) {
+                formatted.push('');
+                continue;
+            }
+
+            // Decrease indent for closing brackets or SQL keywords
+            if (trimmed.startsWith('}') || trimmed.startsWith(');') || trimmed.startsWith(')')) {
+                indent = Math.max(0, indent - 1);
+            }
+
+            formatted.push(tab.repeat(indent) + trimmed);
+
+            // Increase indent for opening brackets
+            if (trimmed.endsWith('{') || trimmed.endsWith('(') || trimmed.endsWith('[')) {
+                indent++;
+            }
+        }
+        this.code = formatted.join('\n');
+        this.magicTooltip = true;
+        setTimeout(() => { this.magicTooltip = false; }, 2000);
+    },
+
     runCode() {
         this.running = true;
         this.results = null;
@@ -83,7 +116,7 @@
     {{-- 2-Column Clean Workspace --}}
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {{-- Left Pane: Instructions & Schema --}}
+        {{-- Left Pane: Structured Point-to-Point Instructions --}}
         <div class="lg:col-span-5 bg-[#0e1422] p-6 rounded-2xl border border-slate-800/90 shadow-sm space-y-6">
             <div class="space-y-3">
                 <div class="flex items-center gap-2">
@@ -102,19 +135,73 @@
                     <span x-show="lang === 'id'">{{ $challenge['title_id'] }}</span>
                     <span x-show="lang === 'en'">{{ $challenge['title_en'] }}</span>
                 </h1>
+
+                <p class="text-xs text-slate-400 leading-relaxed font-normal">
+                    <span x-show="lang === 'id'">{{ $challenge['summary_id'] ?? '' }}</span>
+                    <span x-show="lang === 'en'">{{ $challenge['summary_en'] ?? '' }}</span>
+                </p>
             </div>
 
-            {{-- Formatted Description with line breaks and clean typography --}}
-            <div class="text-xs text-slate-300 leading-relaxed space-y-2.5 border-t border-slate-800/80 pt-5">
-                <h3 class="text-xs font-semibold text-slate-200 uppercase tracking-wider">
-                    <span x-show="lang === 'id'">Deskripsi & Spesifikasi Soal</span>
-                    <span x-show="lang === 'en'">Instructions & Specifications</span>
+            {{-- Point-to-Point Steps Breakdown --}}
+            @if(!empty($challenge['steps_id']))
+            <div class="space-y-3 border-t border-slate-800/80 pt-5">
+                <h3 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    <span x-show="lang === 'id'">Langkah & Spesifikasi Tugas</span>
+                    <span x-show="lang === 'en'">Step-by-Step Requirements</span>
                 </h3>
-                <div class="bg-[#070b14] p-4 rounded-xl border border-slate-800/70 whitespace-pre-line font-normal text-slate-300 text-[12px] leading-relaxed">
-                    <span x-show="lang === 'id'">{{ $challenge['description_id'] }}</span>
-                    <span x-show="lang === 'en'">{{ $challenge['description_en'] }}</span>
+
+                <div class="space-y-2 text-xs">
+                    <template x-if="lang === 'id'">
+                        <div class="space-y-2">
+                            @foreach($challenge['steps_id'] as $idx => $step)
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-[#070b14] border border-slate-800/70 text-slate-300">
+                                <span class="w-5 h-5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{{ $idx + 1 }}</span>
+                                <div class="text-[12px] leading-relaxed prose prose-invert">{!! $step !!}</div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </template>
+                    <template x-if="lang === 'en'">
+                        <div class="space-y-2">
+                            @foreach($challenge['steps_en'] ?? $challenge['steps_id'] as $idx => $step)
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-[#070b14] border border-slate-800/70 text-slate-300">
+                                <span class="w-5 h-5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{{ $idx + 1 }}</span>
+                                <div class="text-[12px] leading-relaxed prose prose-invert">{!! $step !!}</div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </template>
                 </div>
             </div>
+            @endif
+
+            {{-- Rules & Expected Rules Card --}}
+            @if(!empty($challenge['rules_id']))
+            <div class="space-y-2 border-t border-slate-800/80 pt-5">
+                <h3 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span x-show="lang === 'id'">Contoh Kasus & Ketentuan</span>
+                    <span x-show="lang === 'en'">Example Cases & Rules</span>
+                </h3>
+                <div class="p-3.5 rounded-xl bg-[#070b14] border border-slate-800/80 text-xs text-slate-300 space-y-1.5">
+                    <template x-if="lang === 'id'">
+                        <ul class="list-disc list-inside space-y-1 text-[11px] leading-relaxed text-slate-300">
+                            @foreach($challenge['rules_id'] as $rule)
+                            <li>{!! $rule !!}</li>
+                            @endforeach
+                        </ul>
+                    </template>
+                    <template x-if="lang === 'en'">
+                        <ul class="list-disc list-inside space-y-1 text-[11px] leading-relaxed text-slate-300">
+                            @foreach($challenge['rules_en'] ?? $challenge['rules_id'] as $rule)
+                            <li>{!! $rule !!}</li>
+                            @endforeach
+                        </ul>
+                    </template>
+                </div>
+            </div>
+            @endif
 
             {{-- SQL Schema Table Definition (if SQL challenge) --}}
             @if(!empty($challenge['schema_setup']))
@@ -176,7 +263,7 @@
         {{-- Right Pane: Code Editor & Execution Results --}}
         <div class="lg:col-span-7 space-y-4">
             
-            {{-- Code Editor Card --}}
+            {{-- Code Editor Card with Magic Beautify Toolbar --}}
             <div class="bg-[#0e1422] rounded-2xl border border-slate-800/90 shadow-sm overflow-hidden">
                 <div class="bg-slate-900/95 border-b border-slate-800 p-3 px-4 flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -188,12 +275,26 @@
                         </span>
                     </div>
 
-                    <button type="button" @click="runCode()" :disabled="running" class="inline-flex items-center px-4 py-2 rounded-lg border border-emerald-500 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 transition-all shadow-sm">
-                        <svg x-show="!running" class="w-3.5 h-3.5 mr-1.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        <svg x-show="running" class="w-3.5 h-3.5 mr-1.5 animate-spin text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                        <span x-show="!running" x-text="lang === 'id' ? 'Jalankan & Evaluasi' : 'Run & Evaluate'"></span>
-                        <span x-show="running">Evaluating...</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        {{-- Magic Beautify Button --}}
+                        <div class="relative">
+                            <button type="button" @click="beautifyCode()" title="Rapikan / Beautify Kode Otomatis" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-purple-500/40 bg-purple-950/40 text-purple-300 hover:bg-purple-900/50 hover:text-purple-100 text-xs font-semibold transition-all">
+                                <svg class="w-3.5 h-3.5 text-purple-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                                <span>Magic Beautify</span>
+                            </button>
+                            <span x-show="magicTooltip" x-transition.opacity class="absolute -bottom-8 right-0 text-[10px] font-mono px-2 py-0.5 rounded bg-purple-900 border border-purple-700 text-purple-200 whitespace-nowrap shadow-lg">
+                                ✨ Kode dirapikan!
+                            </span>
+                        </div>
+
+                        {{-- Run & Test Button --}}
+                        <button type="button" @click="runCode()" :disabled="running" class="inline-flex items-center px-4 py-1.5 rounded-lg border border-emerald-500 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 transition-all shadow-sm">
+                            <svg x-show="!running" class="w-3.5 h-3.5 mr-1.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg x-show="running" class="w-3.5 h-3.5 mr-1.5 animate-spin text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            <span x-show="!running" x-text="lang === 'id' ? 'Jalankan & Evaluasi' : 'Run & Evaluate'"></span>
+                            <span x-show="running">Evaluating...</span>
+                        </button>
+                    </div>
                 </div>
 
                 {{-- Code Editor Textarea --}}

@@ -131,8 +131,8 @@
                 </h2>
 
                 <p class="text-slate-400 text-xs leading-relaxed line-clamp-3">
-                    <span x-show="lang === 'id'">{{ $ch['description_id'] }}</span>
-                    <span x-show="lang === 'en'">{{ $ch['description_en'] }}</span>
+                    <span x-show="lang === 'id'">{{ $ch['summary_id'] ?? '' }}</span>
+                    <span x-show="lang === 'en'">{{ $ch['summary_en'] ?? '' }}</span>
                 </p>
             </div>
 
