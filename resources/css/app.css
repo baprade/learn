@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+        background-color: #090d16;
+        color: #e2e8f0;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        touch-action: manipulation;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+        font-family: 'Outfit', system-ui, sans-serif;
+    }
+}
+
+@layer utilities {
+    .bg-grid-subtle {
+        background-size: 32px 32px;
+        background-image: 
+            linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    }
+    
+    .bg-hero-glow {
+        background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.1) 0%, rgba(9, 13, 22, 0) 70%);
+    }
+
+    /* Human Crafted Natural Cards */
+    .natural-card {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .natural-card:hover {
+        border-color: rgba(16, 185, 129, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(16, 185, 129, 0.05);
+    }
+
+    /* Mobile Ambient Pulsing Background Glow */
+    @keyframes ambientPulse {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(1.05); }
+    }
+
+    .animate-ambient-pulse {
+        animation: ambientPulse 8s ease-in-out infinite;
+    }
+}
+
+/* Custom Clean Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+}
