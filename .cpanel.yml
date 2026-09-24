@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/learn
+    - export DEPLOYPATH=/home/bapradem/learn
     - /bin/cp -R * $DEPLOYPATH/
