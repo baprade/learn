@@ -79,6 +79,23 @@ class LearnTest extends TestCase
         ]);
     }
 
+    public function test_python_evaluator_passes_correct_solution(): void
+    {
+        $user = User::factory()->create();
+        $validPython = "def count_vowels(text: str) -> int:\n    return sum(1 for c in text.lower() if c in 'aeiou')";
+
+        $response = $this->actingAs($user)->postJson('/challenge/python-count-vowels-in-string/run', [
+            'code' => $validPython,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'all_passed',
+            'passed_count' => 3,
+            'total_count' => 3,
+        ]);
+    }
+
     public function test_code_evaluator_blocks_malicious_security_keywords(): void
     {
         $user = User::factory()->create();

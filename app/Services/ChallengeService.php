@@ -423,6 +423,155 @@ class ChallengeService
                     ['input' => ['Belajar Coding Baprade'], 'expected' => false],
                 ],
             ],
+
+            // ==========================================
+            // PYTHON TRACK MODULES
+            // ==========================================
+            [
+                'id' => 201,
+                'slug' => 'python-count-vowels-in-string',
+                'language' => 'python',
+                'title_id' => 'Python 01. Hitung Huruf Vokal dalam Kalimat',
+                'title_en' => 'Python 01. Count Vowels in a String',
+                'category' => 'Python Basics & Strings',
+                'difficulty' => 'Easy',
+                'points' => 15,
+                'summary_id' => 'Hitung jumlah total huruf vokal (a, e, i, o, u) dari sebuah teks tanpa membedakan huruf besar/kecil.',
+                'summary_en' => 'Count total occurrences of vowels (a, e, i, o, u) in a string case-insensitively.',
+                'steps_id' => [
+                    'Deklarasikan fungsi <code>def count_vowels(text: str) -> int:</code>.',
+                    'Ubah seluruh teks menjadi huruf kecil dengan method <code>text.lower()</code>.',
+                    'Periksa setiap karakter dan hitung hanya yang termasuk huruf vokal (<code>a, e, i, o, u</code>).',
+                    'Kembalikan jumlah total kemunculan huruf vokal berupa integer (<code>int</code>).'
+                ],
+                'steps_en' => [
+                    'Define function <code>def count_vowels(text: str) -> int:</code>.',
+                    'Convert string to lowercase using <code>text.lower()</code>.',
+                    'Iterate through characters and count vowels: <code>a, e, i, o, u</code>.',
+                    'Return total count as an integer.'
+                ],
+                'rules_id' => [
+                    'Input: <code>"Bagas Praditya"</code> &rarr; Vokal: a, a, a, i, a &rarr; Return: <code>5</code>',
+                    'Input: <code>"Python Programming"</code> &rarr; Vokal: o, o, a, i &rarr; Return: <code>4</code>',
+                    'Input: <code>"rhythm"</code> &rarr; Vokal: 0 &rarr; Return: <code>0</code>'
+                ],
+                'rules_en' => [
+                    'Input: <code>"Bagas Praditya"</code> -> Return: <code>5</code>',
+                    'Input: <code>"Python Programming"</code> -> Return: <code>4</code>',
+                    'Input: <code>"rhythm"</code> -> Return: <code>0</code>'
+                ],
+                'starter_code' => "def count_vowels(text: str) -> int:\n    # Tulis kode Python kamu di sini\n    return 0",
+                'hints_id' => [
+                    'Clue 1: Gunakan `text.lower()` untuk mengabaikan perbedaan huruf kapital.',
+                    'Clue 2: Manfaatkan list comprehension Python yang elegan: `sum(1 for c in text.lower() if c in "aeiou")`.'
+                ],
+                'hints_en' => [
+                    'Clue 1: Use `text.lower()` for case-insensitivity.',
+                    'Clue 2: Use list comprehension: `sum(1 for c in text.lower() if c in "aeiou")`.'
+                ],
+                'solution_code' => "def count_vowels(text: str) -> int:\n    vowels = set('aeiou')\n    return sum(1 for char in text.lower() if char in vowels)",
+                'test_cases' => [
+                    ['input' => ['Bagas Praditya'], 'expected' => 5],
+                    ['input' => ['Python Programming'], 'expected' => 4],
+                    ['input' => ['rhythm'], 'expected' => 0],
+                ],
+            ],
+            [
+                'id' => 202,
+                'slug' => 'python-filter-positive-even-numbers',
+                'language' => 'python',
+                'title_id' => 'Python 02. Filter Bilangan Genap Positif',
+                'title_en' => 'Python 02. Filter Positive Even Numbers',
+                'category' => 'Python Lists & Comprehensions',
+                'difficulty' => 'Easy',
+                'points' => 15,
+                'summary_id' => 'Saring daftar angka dan ambil hanya angka genap yang bernilai positif (> 0).',
+                'summary_en' => 'Filter a list of numbers and extract only positive even integers (> 0).',
+                'steps_id' => [
+                    'Deklarasikan fungsi <code>def filter_positive_evens(numbers: list) -> list:</code>.',
+                    'Periksa setiap angka <code>n</code> dalam list dengan 2 syarat: <code>n > 0</code> dan <code>n % 2 == 0</code>.',
+                    'Susun angka yang lolos seleksi ke dalam list baru.',
+                    'Kembalikan list hasil filter.'
+                ],
+                'steps_en' => [
+                    'Define function <code>def filter_positive_evens(numbers: list) -> list:</code>.',
+                    'Check conditions for each element: <code>n > 0</code> and <code>n % 2 == 0</code>.',
+                    'Collect matching elements into a list.',
+                    'Return the filtered list.'
+                ],
+                'rules_id' => [
+                    'Input: <code>[-4, -2, 0, 1, 2, 3, 4, 6]</code> &rarr; Lolos: <code>[2, 4, 6]</code>',
+                    'Input: <code>[-1, -3, 0]</code> &rarr; Lolos: <code>[]</code>'
+                ],
+                'rules_en' => [
+                    'Input: <code>[-4, -2, 0, 1, 2, 3, 4, 6]</code> -> Output: <code>[2, 4, 6]</code>',
+                    'Input: <code>[-1, -3, 0]</code> -> Output: <code>[]</code>'
+                ],
+                'starter_code' => "def filter_positive_evens(numbers: list) -> list:\n    # Tulis kode Python kamu di sini\n    return []",
+                'hints_id' => [
+                    'Clue 1: Gunakan modulo `n % 2 == 0` dan perbandingan `n > 0`.',
+                    'Clue 2: Solusi 1-baris Pythonic: `return [n for n in numbers if n > 0 and n % 2 == 0]`'
+                ],
+                'hints_en' => [
+                    'Clue 1: Use modulo `n % 2 == 0` and `n > 0`.',
+                    'Clue 2: Pythonic one-liner: `return [n for n in numbers if n > 0 and n % 2 == 0]`'
+                ],
+                'solution_code' => "def filter_positive_evens(numbers: list) -> list:\n    return [n for n in numbers if n > 0 and n % 2 == 0]",
+                'test_cases' => [
+                    ['input' => [[-4, -2, 0, 1, 2, 3, 4, 6]], 'expected' => [2, 4, 6]],
+                    ['input' => [[10, 15, 20, 25, -8]], 'expected' => [10, 20]],
+                    ['input' => [[-1, -3, 0]], 'expected' => []],
+                ],
+            ],
+            [
+                'id' => 203,
+                'slug' => 'python-format-user-badge',
+                'language' => 'python',
+                'title_id' => 'Python 03. Format User Badge & f-String',
+                'title_en' => 'Python 03. Format User Badge & f-String',
+                'category' => 'Python Basics & Strings',
+                'difficulty' => 'Easy',
+                'points' => 10,
+                'summary_id' => 'Format label badge user dengan role huruf kapital dan username yang bersih.',
+                'summary_en' => 'Format user badge string with uppercase role and sanitized username.',
+                'steps_id' => [
+                    'Deklarasikan fungsi <code>def format_user_badge(username: str, role: str) -> str:</code>.',
+                    'Ubah string <code>role</code> menjadi huruf kapital penuh (UPPERCASE) dengan <code>role.upper()</code>.',
+                    'Hapus spasi liar di awal dan akhir <code>username</code> menggunakan <code>username.strip()</code>.',
+                    'Gabungkan dengan format: <code>"[{ROLE}] {USERNAME}"</code> (misal: <code>"[ADMIN] Bagas"</code>).',
+                    'Kembalikan string hasil format.'
+                ],
+                'steps_en' => [
+                    'Define function <code>def format_user_badge(username: str, role: str) -> str:</code>.',
+                    'Convert <code>role</code> to uppercase using <code>role.upper()</code>.',
+                    'Trim leading/trailing whitespace with <code>username.strip()</code>.',
+                    'Format template as <code>"[{ROLE}] {USERNAME}"</code>.',
+                    'Return the resulting string.'
+                ],
+                'rules_id' => [
+                    'Input: <code>("  Bagas  ", "admin")</code> &rarr; Output: <code>"[ADMIN] Bagas"</code>',
+                    'Input: <code>("Baprade", "member")</code> &rarr; Output: <code>"[MEMBER] Baprade"</code>'
+                ],
+                'rules_en' => [
+                    'Input: <code>("  Bagas  ", "admin")</code> -> Output: <code>"[ADMIN] Bagas"</code>',
+                    'Input: <code>("Baprade", "member")</code> -> Output: <code>"[MEMBER] Baprade"</code>'
+                ],
+                'starter_code' => "def format_user_badge(username: str, role: str) -> str:\n    # Tulis kode Python kamu di sini\n    return \"\"",
+                'hints_id' => [
+                    'Clue 1: Gunakan f-string modern Python: `f"[{role.upper()}] {username.strip()}"`.',
+                    'Clue 2: Pastikan ada spasi setelah kurung siku penutup `]`.'
+                ],
+                'hints_en' => [
+                    'Clue 1: Use Python f-string: `f"[{role.upper()}] {username.strip()}"`.',
+                    'Clue 2: Keep exact spacing after `]`.'
+                ],
+                'solution_code' => "def format_user_badge(username: str, role: str) -> str:\n    return f\"[{role.upper()}] {username.strip()}\"",
+                'test_cases' => [
+                    ['input' => ['  Bagas  ', 'admin'], 'expected' => '[ADMIN] Bagas'],
+                    ['input' => ['Baprade', 'member'], 'expected' => '[MEMBER] Baprade'],
+                    ['input' => ['Developer', 'guest'], 'expected' => '[GUEST] Developer'],
+                ],
+            ],
         ];
     }
 

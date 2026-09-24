@@ -24,6 +24,11 @@ class CodeEvaluatorService
             return $this->evaluateSql($userCode, $challenge);
         }
 
+        if ($lang === 'python' || $lang === 'py') {
+            $pyEvaluator = new PythonEvaluatorService();
+            return $pyEvaluator->evaluatePython($userCode, $challenge['test_cases']);
+        }
+
         return $this->evaluatePhp($userCode, $challenge['test_cases']);
     }
 

@@ -56,8 +56,8 @@
 
     {{-- Track & Filter Selector --}}
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
-        {{-- Language Track Tabs (All / SQL / PHP) --}}
-        <div class="flex items-center p-1 bg-slate-900 border border-slate-800 rounded-lg gap-1 text-xs">
+        {{-- Language Track Tabs (All / SQL / PHP / Python) --}}
+        <div class="flex flex-wrap items-center p-1 bg-slate-900 border border-slate-800 rounded-lg gap-1 text-xs">
             <button type="button" @click="track = 'all'; filterCategory = 'All'" :class="track === 'all' ? 'bg-slate-800 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-white'" class="px-3 py-1.5 rounded transition-all">
                 <span x-show="lang === 'id'">Semua Track</span>
                 <span x-show="lang === 'en'">All Tracks</span>
@@ -69,6 +69,10 @@
             <button type="button" @click="track = 'php'; filterCategory = 'All'" :class="track === 'php' ? 'bg-emerald-600 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-white'" class="px-3 py-1.5 rounded transition-all flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
                 <span>PHP Language</span>
+            </button>
+            <button type="button" @click="track = 'python'; filterCategory = 'All'" :class="track === 'python' ? 'bg-emerald-600 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-white'" class="px-3 py-1.5 rounded transition-all flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                <span>Python Track</span>
             </button>
         </div>
 
@@ -97,6 +101,16 @@
                     SOLID & OOP
                 </button>
             </template>
+            <template x-if="track === 'all' || track === 'python'">
+                <button type="button" @click="filterCategory = 'Python Basics & Strings'" :class="filterCategory === 'Python Basics & Strings' ? 'bg-slate-800 text-white border-slate-700 font-semibold' : 'bg-transparent text-slate-400 hover:text-white border-transparent'" class="px-2.5 py-1 rounded border transition-all">
+                    Python Basics
+                </button>
+            </template>
+            <template x-if="track === 'all' || track === 'python'">
+                <button type="button" @click="filterCategory = 'Python Lists & Comprehensions'" :class="filterCategory === 'Python Lists & Comprehensions' ? 'bg-slate-800 text-white border-slate-700 font-semibold' : 'bg-transparent text-slate-400 hover:text-white border-transparent'" class="px-2.5 py-1 rounded border transition-all">
+                    Python Lists
+                </button>
+            </template>
         </div>
     </div>
 
@@ -109,7 +123,11 @@
             <div class="space-y-2.5">
                 <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded font-mono {{ ($ch['language'] ?? 'php') === 'sql' ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' : 'bg-indigo-950 text-indigo-400 border border-indigo-800' }}">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded font-mono 
+                            @if(($ch['language'] ?? 'php') === 'sql') bg-cyan-950 text-cyan-400 border border-cyan-800
+                            @elseif(($ch['language'] ?? 'php') === 'python') bg-amber-950 text-amber-400 border border-amber-800
+                            @else bg-indigo-950 text-indigo-400 border border-indigo-800
+                            @endif">
                             {{ strtoupper($ch['language'] ?? 'php') }}
                         </span>
                         <span class="text-[10px] text-slate-400 px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">

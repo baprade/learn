@@ -271,7 +271,10 @@
                         <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
                         <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
                         <span class="text-xs font-mono font-medium text-slate-400 ml-2">
-                            {{ ($challenge['language'] ?? 'php') === 'sql' ? 'query.sql' : 'solution.php' }}
+                            @if(($challenge['language'] ?? 'php') === 'sql') query.sql
+                            @elseif(($challenge['language'] ?? 'php') === 'python') solution.py
+                            @else solution.php
+                            @endif
                         </span>
                     </div>
 
