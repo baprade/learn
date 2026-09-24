@@ -42,7 +42,7 @@ class ChallengeService
                     'Output must contain exactly 4 columns in the requested order.'
                 ],
                 'schema_setup' => "CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), status VARCHAR(20), city VARCHAR(50));\nINSERT INTO users VALUES (1, 'Bagas', 'bagas@example.com', 'active', 'Jakarta'), (2, 'Andi', 'andi@example.com', 'inactive', 'Bandung'), (3, 'Citra', 'citra@example.com', 'active', 'Surabaya'), (4, 'Budi', 'budi@example.com', 'active', 'Jakarta');",
-                'starter_code' => "-- Tulis query SQL kamu di sini\nSELECT id, name, email, city \nFROM users \nWHERE status = 'active' \nORDER BY name ASC;",
+                'starter_code' => "-- Tulis query SQL kamu di sini\nSELECT id, name, email, city \nFROM users \nWHERE ...",
                 'hints_id' => [
                     'Sintaks dasar SQL: `SELECT kolom1, kolom2 FROM nama_tabel WHERE kondisi ORDER BY nama_kolom ASC;`',
                     'Pastikan tanda kutip tunggal digunakan untuk membandingkan string: `WHERE status = \'active\'`.',
@@ -98,7 +98,7 @@ class ChallengeService
                     'Output columns: <code>category</code>, <code>total_revenue</code>, <code>total_products</code>.'
                 ],
                 'schema_setup' => "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(100), category VARCHAR(50), price INT, stock INT);\nINSERT INTO products VALUES (1, 'Laptop Pro', 'Electronics', 1500000, 2), (2, 'Mouse Wireless', 'Electronics', 150000, 5), (3, 'Kaos Polos', 'Apparel', 75000, 4), (4, 'Jaket Hoodie', 'Apparel', 250000, 3), (5, 'Stiker Dev', 'Merchandise', 15000, 10);",
-                'starter_code' => "-- Tulis query SQL agregasi kamu di sini\nSELECT category, \n       SUM(price * stock) AS total_revenue,\n       COUNT(*) AS total_products\nFROM products\nGROUP BY category\nHAVING total_revenue > 500000\nORDER BY total_revenue DESC;",
+                'starter_code' => "-- Tulis query SQL agregasi kamu di sini\nSELECT category, \n       SUM(price * stock) AS total_revenue,\n       COUNT(*) AS total_products\nFROM products\nGROUP BY ...",
                 'hints_id' => [
                     'Gunakan `SUM(price * stock) AS total_revenue` untuk mengalikan harga dan stok sebelum dijumlahkan.',
                     'Gunakan `HAVING` bukan `WHERE` untuk memfilter hasil fungsi agregat SUM.',
@@ -151,7 +151,7 @@ class ChallengeService
                     'Ensure correct key linkage between orders and customers.'
                 ],
                 'schema_setup' => "CREATE TABLE customers (id INT PRIMARY KEY, customer_name VARCHAR(100), city VARCHAR(50));\nCREATE TABLE orders (id INT PRIMARY KEY, customer_id INT, order_number VARCHAR(50), amount INT, status VARCHAR(20));\nINSERT INTO customers VALUES (1, 'Bagas Praditya', 'Jakarta'), (2, 'Dewi Sartika', 'Bandung'), (3, 'Rian Hidayat', 'Surabaya');\nINSERT INTO orders VALUES (101, 1, 'ORD-2026-001', 750000, 'PAID'), (102, 2, 'ORD-2026-002', 300000, 'PENDING'), (103, 1, 'ORD-2026-003', 1200000, 'PAID'), (104, 3, 'ORD-2026-004', 450000, 'PAID');",
-                'starter_code' => "-- Tulis query INNER JOIN kamu di sini\nSELECT o.order_number, c.customer_name, o.amount, o.status\nFROM orders o\nINNER JOIN customers c ON o.customer_id = c.id\nWHERE o.status = 'PAID'\nORDER BY o.amount DESC;",
+                'starter_code' => "-- Tulis query INNER JOIN kamu di sini\nSELECT o.order_number, c.customer_name, o.amount, o.status\nFROM orders o\nINNER JOIN customers c ON ...",
                 'hints_id' => [
                     'Gunakan alias tabel: `FROM orders o INNER JOIN customers c ON o.customer_id = c.id`.',
                     'Klausa `WHERE o.status = \'PAID\'` ditulis setelah perintah JOIN.',
@@ -206,7 +206,7 @@ class ChallengeService
                     'Example Input: <code>"Bagas"</code> -> Output: <code>"Halo, Bagas! Selamat belajar coding."</code>',
                     'Punctuation and spacing must match exact specifications.'
                 ],
-                'starter_code' => "<?php\n\nfunction formatGreeting(\$name) {\n    // Tulis kode kamu di sini\n    return \"Halo, \" . \$name . \"! Selamat belajar coding.\";\n}",
+                'starter_code' => "<?php\n\nfunction formatGreeting(\$name) {\n    // Tulis kode kamu di sini\n    return \"\";\n}",
                 'hints_id' => [
                     'Clue 1: Gunakan operator titik `.` untuk menyambung string: `"Halo, " . $name . "! Selamat belajar coding."`',
                     'Clue 2: Atau gunakan interpolasi tanda kutip ganda `""`: `"Halo, $name! Selamat belajar coding."`'
@@ -253,7 +253,7 @@ class ChallengeService
                     'Input: <code>[1, 2, 3, 4, 5, 6]</code> -> Evens: 2, 4, 6 -> Return: <code>12</code>',
                     'Input: <code>[1, 3, 5]</code> -> Return: <code>0</code>'
                 ],
-                'starter_code' => "<?php\n\nfunction sumEvenNumbers(array \$numbers): int {\n    // Tulis kode kamu di sini\n    \$evens = array_filter(\$numbers, fn(\$n) => \$n % 2 === 0);\n    return array_sum(\$evens);\n}",
+                'starter_code' => "<?php\n\nfunction sumEvenNumbers(array \$numbers): int {\n    // Tulis kode kamu di sini\n    return 0;\n}",
                 'hints_id' => [
                     'Clue 1: Modulo `$n % 2 === 0` mengecek apakah bilangan genap.',
                     'Clue 2: Cara 1-baris bersih: `return array_sum(array_filter($numbers, fn($n) => $n % 2 === 0));`'
@@ -300,7 +300,7 @@ class ChallengeService
                     'Input: <code>"Belajar PHP & SQL Modern 2026!"</code> -> Output: <code>"belajar-php-sql-modern-2026"</code>',
                     'Input: <code>"  Clean   URL  Generator  "</code> -> Output: <code>"clean-url-generator"</code>'
                 ],
-                'starter_code' => "<?php\n\nfunction generateSlug(string \$title): string {\n    // Tulis kode kamu di sini\n    \$slug = strtolower(\$title);\n    \$slug = preg_replace('/[^a-z0-9\s-]/', '', \$slug);\n    \$slug = preg_replace('/[\s-]+/', '-', \$slug);\n    return trim(\$slug, '-');\n}",
+                'starter_code' => "<?php\n\nfunction generateSlug(string \$title): string {\n    // Tulis kode kamu di sini\n    return \"\";\n}",
                 'hints_id' => [
                     'Clue 1: Lowercase dengan `strtolower($title)`.',
                     'Clue 2: Hapus simbol: `preg_replace(\'/[^a-z0-9\s-]/\', \'\', $slug)`.',
@@ -353,7 +353,7 @@ class ChallengeService
                     'Input: <code>(600000, "MEMBER")</code> -> 10% off (540k) + Flat 25k off -> Return: <code>515000</code>',
                     'Input: <code>(200000, "GUEST")</code> -> 0% off -> Return: <code>200000</code>'
                 ],
-                'starter_code' => "<?php\n\nfunction calculateFinalPrice(float \$subtotal, string \$membership): float {\n    // Tulis kode kamu di sini\n    \$rate = match(strtoupper(\$membership)) {\n        'PREMIUM' => 0.20,\n        'MEMBER' => 0.10,\n        default => 0.0,\n    };\n    \$discounted = \$subtotal - (\$subtotal * \$rate);\n    if (\$discounted >= 500000) {\n        \$discounted -= 25000;\n    }\n    return \$discounted;\n}",
+                'starter_code' => "<?php\n\nfunction calculateFinalPrice(float \$subtotal, string \$membership): float {\n    // Tulis kode kamu di sini\n    return 0.0;\n}",
                 'hints_id' => [
                     'Clue 1: Gunakan `match(strtoupper($membership))` untuk memetakan tier ke persentase desimal.',
                     'Clue 2: Hitung diskon persentase dulu sebelum mengecek threshold 500.000.',
@@ -403,7 +403,7 @@ class ChallengeService
                     '<code>"Kasur ini rusak"</code> -> Sanitized: <code>"kasurinirusak"</code> -> Return: <code>true</code>',
                     '<code>"Belajar Coding Baprade"</code> -> Return: <code>false</code>'
                 ],
-                'starter_code' => "<?php\n\nfunction isPalindrome(string \$text): bool {\n    // Tulis kode kamu di sini\n    \$clean = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', \$text));\n    return \$clean === strrev(\$clean);\n}",
+                'starter_code' => "<?php\n\nfunction isPalindrome(string \$text): bool {\n    // Tulis kode kamu di sini\n    return false;\n}",
                 'hints_id' => [
                     'Clue 1: Hapus spasi & simbol: `preg_replace(\'/[^a-zA-Z0-9]/\', \'\', $text)`.',
                     'Clue 2: Lowercase dengan `strtolower(...)`.',
