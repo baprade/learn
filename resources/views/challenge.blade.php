@@ -142,6 +142,31 @@
                 </p>
             </div>
 
+            {{-- Similar Logic Reference Example Card (Pelajari Contoh Kode Serupa) --}}
+            @if(!empty($challenge['example_code']))
+            <div class="space-y-2 border-t border-slate-800/80 pt-5">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        <span x-show="lang === 'id'">{{ $challenge['example_title_id'] ?? 'Contoh Pola Logika Serupa' }}</span>
+                        <span x-show="lang === 'en'">{{ $challenge['example_title_en'] ?? 'Similar Logic Pattern Example' }}</span>
+                    </h3>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950/60 border border-indigo-800/60 text-indigo-300">Referensi Kode</span>
+                </div>
+
+                @if(!empty($challenge['example_explanation_id']))
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    <span x-show="lang === 'id'">{!! $challenge['example_explanation_id'] !!}</span>
+                    <span x-show="lang === 'en'">{!! $challenge['example_explanation_en'] ?? $challenge['example_explanation_id'] !!}</span>
+                </p>
+                @endif
+
+                <div class="p-3.5 rounded-xl bg-[#070b14] border border-indigo-900/40 text-[11px] font-mono text-indigo-200 overflow-x-auto shadow-inner leading-relaxed">
+                    <pre class="m-0"><code>{{ $challenge['example_code'] }}</code></pre>
+                </div>
+            </div>
+            @endif
+
             {{-- Point-to-Point Steps Breakdown --}}
             @if(!empty($challenge['steps_id']))
             <div class="space-y-3 border-t border-slate-800/80 pt-5">

@@ -11,6 +11,62 @@ class ChallengeService
             // SQL TRACK MODULES
             // ==========================================
             [
+                'id' => 100,
+                'slug' => 'sql-select-all-customers',
+                'language' => 'sql',
+                'title_id' => 'SQL 00. Ambil Semua Data Pelanggan (SELECT *)',
+                'title_en' => 'SQL 00. Select All Customers (SELECT *)',
+                'category' => 'SQL Basics & Querying',
+                'difficulty' => 'Easy',
+                'points' => 10,
+                'summary_id' => 'Pelajari query SQL paling mendasar: mengambil seluruh data dan kolom dari sebuah tabel.',
+                'summary_en' => 'Learn the most fundamental SQL query: select all records and columns from a table.',
+                'example_title_id' => 'Contoh Logika Serupa: Mengambil Semua Baris Produk',
+                'example_title_en' => 'Similar Pattern Example: Select All Items',
+                'example_explanation_id' => 'Untuk mengambil seluruh kolom dari suatu tabel, kita menggunakan simbol bintang (<code>*</code>) setelah kata kunci <code>SELECT</code>.',
+                'example_explanation_en' => 'To retrieve all columns, use the asterisk wildcard (<code>*</code>) after <code>SELECT</code>.',
+                'example_code' => "-- Contoh mengambil semua data dari tabel 'categories'\nSELECT * FROM categories;",
+                'steps_id' => [
+                    'Gunakan klausa <code>SELECT *</code> untuk mengambil semua kolom.',
+                    'Arahkan sumber tabel dengan klausa <code>FROM customers</code>.',
+                    'Akhiri query SQL kamu dengan titik koma (<code>;</code>).'
+                ],
+                'steps_en' => [
+                    'Use <code>SELECT *</code> to retrieve all columns.',
+                    'Specify the table via <code>FROM customers</code>.',
+                    'End statement with semicolon (<code>;</code>).'
+                ],
+                'rules_id' => [
+                    'Tabel sumber: <code>customers</code> (kolom: <code>id</code>, <code>name</code>, <code>city</code>)',
+                    'Tampilkan seluruh 3 baris data yang ada di tabel.'
+                ],
+                'rules_en' => [
+                    'Source table: <code>customers</code>',
+                    'Display all records without filtering.'
+                ],
+                'schema_setup' => "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(100), city VARCHAR(50));\nINSERT INTO customers VALUES (1, 'Bagas Praditya', 'Jakarta'), (2, 'Dewi Sartika', 'Bandung'), (3, 'Rian Hidayat', 'Surabaya');",
+                'starter_code' => "-- Tulis query SQL kamu di sini\nSELECT ...",
+                'hints_id' => [
+                    'Clue 1: Sintaks dasar: `SELECT * FROM nama_tabel;`',
+                    'Clue 2: Tabel yang diminta adalah `customers`.'
+                ],
+                'hints_en' => [
+                    'Clue 1: Basic syntax: `SELECT * FROM table_name;`',
+                    'Clue 2: Target table is `customers`.'
+                ],
+                'solution_code' => "SELECT * FROM customers;",
+                'test_cases' => [
+                    [
+                        'input' => ['SELECT * FROM customers'],
+                        'expected' => [
+                            ['id' => 1, 'name' => 'Bagas Praditya', 'city' => 'Jakarta'],
+                            ['id' => 2, 'name' => 'Dewi Sartika', 'city' => 'Bandung'],
+                            ['id' => 3, 'name' => 'Rian Hidayat', 'city' => 'Surabaya'],
+                        ]
+                    ]
+                ],
+            ],
+            [
                 'id' => 101,
                 'slug' => 'sql-select-active-users',
                 'language' => 'sql',
@@ -21,6 +77,11 @@ class ChallengeService
                 'points' => 15,
                 'summary_id' => 'Ambil data pengguna dengan status aktif dan urutkan berdasarkan nama.',
                 'summary_en' => 'Select active users from database sorted alphabetically by name.',
+                'example_title_id' => 'Contoh Logika Serupa: Filter Pegawai Tetap',
+                'example_title_en' => 'Similar Pattern Example: Filter Permanent Staff',
+                'example_explanation_id' => 'Jika kita ingin mengambil kolom <code>id</code>, <code>title</code> dari tabel <code>books</code> yang berstatus <code>available</code> terurut abjad:',
+                'example_explanation_en' => 'Selecting specific columns with status filtering and sorting:',
+                'example_code' => "-- Contoh memilih kolom spesifik, filter WHERE, & urutan ASC\nSELECT id, title, price \nFROM books \nWHERE status = 'available' \nORDER BY title ASC;",
                 'steps_id' => [
                     'Pilih kolom yang ditampilkan: <code>id</code>, <code>name</code>, <code>email</code>, dan <code>city</code>.',
                     'Gunakan klausa <code>WHERE status = \'active\'</code> untuk memfilter pengguna aktif.',
@@ -75,6 +136,11 @@ class ChallengeService
                 'points' => 20,
                 'summary_id' => 'Hitung total omset dan jumlah produk per kategori dengan filter threshold pendapatan.',
                 'summary_en' => 'Calculate total revenue and product count per category filtered by threshold.',
+                'example_title_id' => 'Contoh Logika Serupa: Agregasi Nilai Transaksi per Cabang',
+                'example_title_en' => 'Similar Pattern Example: Aggregating Branch Sales',
+                'example_explanation_id' => 'Mengelompokkan data per wilayah, menjumlahkan nilai total, menghitung jumlah invoice, dan memfilter total dengan <code>HAVING</code>:',
+                'example_explanation_en' => 'Grouping records by region with sum calculation and HAVING filter:',
+                'example_code' => "-- Contoh GROUP BY dengan SUM, COUNT, dan filter HAVING\nSELECT branch_city, \n       SUM(total_amount) AS branch_revenue,\n       COUNT(*) AS total_invoices\nFROM sales\nGROUP BY branch_city\nHAVING SUM(total_amount) > 1000000\nORDER BY branch_revenue DESC;",
                 'steps_id' => [
                     'Kelompokkan baris berdasarkan kolom <code>category</code>.',
                     'Hitung total pendapatan dengan rumus <code>SUM(price * stock)</code> dan beri alias <code>total_revenue</code>.',
@@ -130,6 +196,11 @@ class ChallengeService
                 'points' => 25,
                 'summary_id' => 'Gabungkan data transaksi pesanan dengan tabel pelanggan menggunakan INNER JOIN.',
                 'summary_en' => 'Join orders and customers relational tables via INNER JOIN.',
+                'example_title_id' => 'Contoh Logika Serupa: Relasi Mahasiswa & Jurusan',
+                'example_title_en' => 'Similar Pattern Example: Student & Department Join',
+                'example_explanation_id' => 'Menghubungkan dua tabel dengan foreign key, memilih kolom dari kedua tabel, dan mengurutkan hasilnya:',
+                'example_explanation_en' => 'Joining two tables on foreign keys with column selection and ordering:',
+                'example_code' => "-- Contoh menggabungkan tabel students (s) dan departments (d)\nSELECT s.nim, s.student_name, d.department_name, s.gpa\nFROM students s\nINNER JOIN departments d ON s.department_id = d.id\nWHERE s.status = 'ACTIVE'\nORDER BY s.gpa DESC;",
                 'steps_id' => [
                     'Relasikan tabel <code>orders o</code> dan <code>customers c</code> dengan syarat: <code>ON o.customer_id = c.id</code>.',
                     'Pilih 4 kolom keluaran: <code>o.order_number</code>, <code>c.customer_name</code>, <code>o.amount</code>, dan <code>o.status</code>.',
@@ -178,6 +249,56 @@ class ChallengeService
             // PHP TRACK MODULES
             // ==========================================
             [
+                'id' => 0,
+                'slug' => 'php-basic-sum-two-numbers',
+                'language' => 'php',
+                'title_id' => 'PHP 00. Penjumlahan Dua Angka (Dasar Operator +)',
+                'title_en' => 'PHP 00. Addition of Two Numbers (Basic + Operator)',
+                'category' => 'PHP Basics',
+                'difficulty' => 'Easy',
+                'points' => 10,
+                'summary_id' => 'Pelajari fungsi paling dasar: menerima 2 input angka dan menjumlahkannya.',
+                'summary_en' => 'Learn the most basic function: take two numbers and return their sum.',
+                'example_title_id' => 'Contoh Logika Serupa: Menghitung Selisih Dua Angka',
+                'example_title_en' => 'Similar Pattern Example: Calculating Difference',
+                'example_explanation_id' => 'Fungsi berikut menerima 2 parameter dan mengembalikan hasil pengurangan:',
+                'example_explanation_en' => 'The following function takes two parameters and returns subtraction:',
+                'example_code' => "<?php\n\nfunction calculateDifference(int \$x, int \$y): int {\n    // Mengurangkan x dengan y\n    return \$x - \$y;\n}",
+                'steps_id' => [
+                    'Terima parameter <code>int $a</code> dan <code>int $b</code>.',
+                    'Gunakan operator penjumlahan <code>+</code> untuk menghitung total <code>$a + $b</code>.',
+                    'Kembalikan (return) hasil penjumlahan integer tersebut.'
+                ],
+                'steps_en' => [
+                    'Accept parameters <code>int $a</code> and <code>int $b</code>.',
+                    'Use addition operator <code>+</code> to compute <code>$a + $b</code>.',
+                    'Return the integer sum.'
+                ],
+                'rules_id' => [
+                    'Input: <code>(5, 7)</code> &rarr; Return: <code>12</code>',
+                    'Input: <code>(10, -3)</code> &rarr; Return: <code>7</code>'
+                ],
+                'rules_en' => [
+                    'Input: <code>(5, 7)</code> -> Return: <code>12</code>',
+                    'Input: <code>(10, -3)</code> -> Return: <code>7</code>'
+                ],
+                'starter_code' => "<?php\n\nfunction sumNumbers(int \$a, int \$b): int {\n    // Tulis kode kamu di sini\n    return 0;\n}",
+                'hints_id' => [
+                    'Clue 1: Gunakan tanda tambah `+` untuk menjumlahkan variabel `$a` dan `$b`.',
+                    'Clue 2: Satu baris sederhana: `return $a + $b;`'
+                ],
+                'hints_en' => [
+                    'Clue 1: Use `+` operator on `$a` and `$b`.',
+                    'Clue 2: Simple one-liner: `return $a + $b;`'
+                ],
+                'solution_code' => "<?php\n\nfunction sumNumbers(int \$a, int \$b): int {\n    return \$a + \$b;\n}",
+                'test_cases' => [
+                    ['input' => [5, 7], 'expected' => 12],
+                    ['input' => [10, -3], 'expected' => 7],
+                    ['input' => [0, 0], 'expected' => 0],
+                ],
+            ],
+            [
                 'id' => 1,
                 'slug' => 'hello-world-string-concatenation',
                 'language' => 'php',
@@ -188,6 +309,11 @@ class ChallengeService
                 'points' => 10,
                 'summary_id' => 'Buat fungsi pembentuk salam dengan penggabungan string nama yang dinamis.',
                 'summary_en' => 'Create a greeting formatter function using dynamic string concatenation.',
+                'example_title_id' => 'Contoh Logika Serupa: Format Tag Selamat Datang Toko',
+                'example_title_en' => 'Similar Pattern Example: Welcome Store Formatter',
+                'example_explanation_id' => 'Contoh penggabungan string nama toko dan kota menggunakan operator titik (<code>.</code>):',
+                'example_explanation_en' => 'String concatenation using dot (<code>.</code>) operator:',
+                'example_code' => "<?php\n\nfunction formatStoreWelcome(string \$storeName, string \$city): string {\n    // Menggabungkan string dengan operator titik\n    return \"Selamat datang di \" . \$storeName . \", Cabang \" . \$city . \".\";\n}",
                 'steps_id' => [
                     'Deklarasikan fungsi: <code>function formatGreeting($name)</code>.',
                     'Gabungkan string nama ke dalam template salam dengan format persis: <code>"Halo, {name}! Selamat belajar coding."</code>.',
@@ -233,6 +359,11 @@ class ChallengeService
                 'points' => 15,
                 'summary_id' => 'Filter seluruh angka genap dalam array dan jumlahkan nilainya.',
                 'summary_en' => 'Filter all even numbers in an array and calculate their sum.',
+                'example_title_id' => 'Contoh Logika Serupa: Jumlahkan Angka Ganjil',
+                'example_title_en' => 'Similar Pattern Example: Sum of Odd Numbers',
+                'example_explanation_id' => 'Memfilter angka dengan kondisi sisa bagi modulo (<code>% 2 !== 0</code>) dan menjumlahkannya:',
+                'example_explanation_en' => 'Filtering odd numbers via modulo and computing sum:',
+                'example_code' => "<?php\n\nfunction sumOddNumbers(array \$numbers): int {\n    \$odds = array_filter(\$numbers, fn(\$n) => \$n % 2 !== 0);\n    return array_sum(\$odds);\n}",
                 'steps_id' => [
                     'Terima parameter <code>array $numbers</code>.',
                     'Periksa setiap elemen: angka dikatakan genap jika sisa bagi dengan 2 adalah nol (<code>$n % 2 === 0</code>).',
@@ -280,6 +411,11 @@ class ChallengeService
                 'points' => 20,
                 'summary_id' => 'Format judul artikel menjadi URL slug bersih, huruf kecil, dan ramah SEO.',
                 'summary_en' => 'Transform a title into a lowercase SEO-friendly URL slug.',
+                'example_title_id' => 'Contoh Logika Serupa: Sanitisasi Username Kode',
+                'example_title_en' => 'Similar Pattern Example: Username Sanitizer',
+                'example_explanation_id' => 'Mengubah huruf kecil, menghapus karakter selain huruf dan angka dengan regex:',
+                'example_explanation_en' => 'Lowercasing and stripping illegal characters via regex:',
+                'example_code' => "<?php\n\nfunction sanitizeUsername(string \$input): string {\n    \$clean = strtolower(\$input);\n    // Menghapus semua karakter selain a-z dan 0-9\n    return preg_replace('/[^a-z0-9]/', '', \$clean);\n}",
                 'steps_id' => [
                     'Ubah semua karakter huruf menjadi huruf kecil (<code>strtolower</code>).',
                     'Hapus karakter khusus/simbol selain huruf (<code>a-z</code>), angka (<code>0-9</code>), dan spasi.',
@@ -331,6 +467,11 @@ class ChallengeService
                 'points' => 25,
                 'summary_id' => 'Hitung harga checkout bertingkat berdasarkan tier membership dan voucher flat.',
                 'summary_en' => 'Calculate tiered checkout price based on membership and flat voucher.',
+                'example_title_id' => 'Contoh Logika Serupa: Kalkulasi Pajak Kendaraan',
+                'example_title_en' => 'Similar Pattern Example: Tiered Vehicle Tax Calculation',
+                'example_explanation_id' => 'Menggunakan ekspresi <code>match</code> untuk tarif persentase dan menambahkan biaya administrasi kondisional:',
+                'example_explanation_en' => 'Using match expressions for rates and conditional extra fees:',
+                'example_code' => "<?php\n\nfunction calculateTax(float \$basePrice, string \$type): float {\n    \$rate = match(strtoupper(\$type)) {\n        'ELECTRIC' => 0.02,\n        'HYBRID'   => 0.05,\n        default    => 0.10,\n    };\n    \$tax = \$basePrice * \$rate;\n    if (\$basePrice > 100000000) {\n        \$tax += 500000; // Biaya admin barang mewah\n    }\n    return \$tax;\n}",
                 'steps_id' => [
                     'Tentukan persentase diskon membership: <code>PREMIUM = 20%</code> (0.20), <code>MEMBER = 10%</code> (0.10), <code>GUEST = 0%</code> (0.0).',
                     'Hitung harga terdiskon awal: <code>$discounted = $subtotal - ($subtotal * $rate)</code>.',
@@ -382,6 +523,11 @@ class ChallengeService
                 'points' => 15,
                 'summary_id' => 'Periksa apakah suatu kalimat terbaca sama dari depan maupun belakang.',
                 'summary_en' => 'Test whether a string reads identically forwards and backwards.',
+                'example_title_id' => 'Contoh Logika Serupa: Cek Kesamaan Kata Terbalik',
+                'example_title_en' => 'Similar Pattern Example: Reverse Word Equality',
+                'example_explanation_id' => 'Fungsi pembanding teks sederhana menggunakan <code>strrev</code>:',
+                'example_explanation_en' => 'Basic string reverse comparison using strrev:',
+                'example_code' => "<?php\n\nfunction isSimpleMirror(string \$word): bool {\n    // Membalik kata dan membandingkan secara langsung\n    return strtolower(\$word) === strrev(strtolower(\$word));\n}",
                 'steps_id' => [
                     'Bersihkan string dari spasi, tanda baca, dan karakter non-alfanumerik.',
                     'Ubah semua karakter huruf menjadi huruf kecil (lowercase).',
@@ -428,6 +574,57 @@ class ChallengeService
             // PYTHON TRACK MODULES
             // ==========================================
             [
+                'id' => 200,
+                'slug' => 'python-multiply-two-numbers',
+                'language' => 'python',
+                'title_id' => 'Python 00. Perkalian Dua Angka (Dasar Operator *)',
+                'title_en' => 'Python 00. Multiply Two Numbers (Basic * Operator)',
+                'category' => 'Python Basics',
+                'difficulty' => 'Easy',
+                'points' => 10,
+                'summary_id' => 'Pelajari fungsi paling dasar di Python: menerima 2 input angka dan mengembalikan hasil perkaliannya.',
+                'summary_en' => 'Learn the most fundamental Python function: accept two numbers and return their product.',
+                'example_title_id' => 'Contoh Logika Serupa: Penjumlahan Dua Angka di Python',
+                'example_title_en' => 'Similar Pattern Example: Adding Two Numbers in Python',
+                'example_explanation_id' => 'Fungsi Python menerima argumen dan mengembalikan nilai dengan kata kunci <code>return</code>:',
+                'example_explanation_en' => 'A basic Python function returning sum of two arguments:',
+                'example_code' => "def add_numbers(x: int, y: int) -> int:\n    # Menjumlahkan dua angka\n    return x + y",
+                'steps_id' => [
+                    'Deklarasikan fungsi <code>def multiply_two_numbers(a: int, b: int) -> int:</code>.',
+                    'Gunakan operator perkalian bintang (<code>*</code>) untuk mengalikan <code>a * b</code>.',
+                    'Kembalikan (return) hasil perkalian integer tersebut.'
+                ],
+                'steps_en' => [
+                    'Define function <code>def multiply_two_numbers(a: int, b: int) -> int:</code>.',
+                    'Use asterisk <code>*</code> operator to multiply <code>a * b</code>.',
+                    'Return the integer result.'
+                ],
+                'rules_id' => [
+                    'Input: <code>(4, 5)</code> &rarr; Return: <code>20</code>',
+                    'Input: <code>(7, 0)</code> &rarr; Return: <code>0</code>',
+                    'Input: <code>(-3, 6)</code> &rarr; Return: <code>-18</code>'
+                ],
+                'rules_en' => [
+                    'Input: <code>(4, 5)</code> -> Return: <code>20</code>',
+                    'Input: <code>(7, 0)</code> -> Return: <code>0</code>'
+                ],
+                'starter_code' => "def multiply_two_numbers(a: int, b: int) -> int:\n    # Tulis kode Python kamu di sini\n    return 0",
+                'hints_id' => [
+                    'Clue 1: Gunakan simbol bintang `*` untuk perkalian matematika.',
+                    'Clue 2: Tulis langsung: `return a * b`'
+                ],
+                'hints_en' => [
+                    'Clue 1: Use `*` operator for multiplication.',
+                    'Clue 2: Write: `return a * b`'
+                ],
+                'solution_code' => "def multiply_two_numbers(a: int, b: int) -> int:\n    return a * b",
+                'test_cases' => [
+                    ['input' => [4, 5], 'expected' => 20],
+                    ['input' => [7, 0], 'expected' => 0],
+                    ['input' => [-3, 6], 'expected' => -18],
+                ],
+            ],
+            [
                 'id' => 201,
                 'slug' => 'python-count-vowels-in-string',
                 'language' => 'python',
@@ -438,6 +635,11 @@ class ChallengeService
                 'points' => 15,
                 'summary_id' => 'Hitung jumlah total huruf vokal (a, e, i, o, u) dari sebuah teks tanpa membedakan huruf besar/kecil.',
                 'summary_en' => 'Count total occurrences of vowels (a, e, i, o, u) in a string case-insensitively.',
+                'example_title_id' => 'Contoh Logika Serupa: Menghitung Karakter Angka dalam String',
+                'example_title_en' => 'Similar Pattern Example: Count Digits in String',
+                'example_explanation_id' => 'Menggunakan looping atau list comprehension untuk menyaring karakter tertentu:',
+                'example_explanation_en' => 'Filtering characters using Python list comprehension & generator expressions:',
+                'example_code' => "def count_digits(text: str) -> int:\n    # Menghitung karakter angka (0-9)\n    return sum(1 for char in text if char.isdigit())",
                 'steps_id' => [
                     'Deklarasikan fungsi <code>def count_vowels(text: str) -> int:</code>.',
                     'Ubah seluruh teks menjadi huruf kecil dengan method <code>text.lower()</code>.',
@@ -487,6 +689,11 @@ class ChallengeService
                 'points' => 15,
                 'summary_id' => 'Saring daftar angka dan ambil hanya angka genap yang bernilai positif (> 0).',
                 'summary_en' => 'Filter a list of numbers and extract only positive even integers (> 0).',
+                'example_title_id' => 'Contoh Logika Serupa: Saring Angka Ganjil Negatif',
+                'example_title_en' => 'Similar Pattern Example: Filter Negative Odd Numbers',
+                'example_explanation_id' => 'Memfilter list dengan list comprehension berkondisi ganda:',
+                'example_explanation_en' => 'Filtering elements with compound boolean condition in list comprehension:',
+                'example_code' => "def filter_negative_odds(numbers: list) -> list:\n    # Mengambil angka negatif (< 0) yang ganjil\n    return [n for n in numbers if n < 0 and n % 2 != 0]",
                 'steps_id' => [
                     'Deklarasikan fungsi <code>def filter_positive_evens(numbers: list) -> list:</code>.',
                     'Periksa setiap angka <code>n</code> dalam list dengan 2 syarat: <code>n > 0</code> dan <code>n % 2 == 0</code>.',
@@ -534,6 +741,11 @@ class ChallengeService
                 'points' => 10,
                 'summary_id' => 'Format label badge user dengan role huruf kapital dan username yang bersih.',
                 'summary_en' => 'Format user badge string with uppercase role and sanitized username.',
+                'example_title_id' => 'Contoh Logika Serupa: Format Header Invoice Toko',
+                'example_title_en' => 'Similar Pattern Example: Store Invoice Header Formatter',
+                'example_explanation_id' => 'Menggunakan f-string untuk menggabungkan kode invoice uppercase dan nama cabang yang sudah dibersihkan spasi:',
+                'example_explanation_en' => 'Using Python f-strings with uppercase and string trimming methods:',
+                'example_code' => "def format_invoice_header(code: str, city: str) -> str:\n    # Format: \"INV-[JAKARTA] #001\"\n    return f\"INV-[{city.strip().upper()}] #{code.strip()}\"",
                 'steps_id' => [
                     'Deklarasikan fungsi <code>def format_user_badge(username: str, role: str) -> str:</code>.',
                     'Ubah string <code>role</code> menjadi huruf kapital penuh (UPPERCASE) dengan <code>role.upper()</code>.',

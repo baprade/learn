@@ -238,9 +238,23 @@ PYTHON;
     protected function simulatePythonExecution(string $code, string $funcName, array $inputs)
     {
         switch ($funcName) {
+            case 'multiply_two_numbers':
+                $a = $inputs[0] ?? 0;
+                $b = $inputs[1] ?? 0;
+                if (str_contains($code, 'return 0') && !str_contains($code, '*')) {
+                    return 0;
+                }
+                return $a * $b;
+
+            case 'format_simple_greeting':
+                $name = (string)($inputs[0] ?? '');
+                if (str_contains($code, 'return ""') && !str_contains($code, 'f"') && !str_contains($code, '+') && !str_contains($code, 'format')) {
+                    return "";
+                }
+                return "Halo, " . trim($name) . "!";
+
             case 'count_vowels':
                 $text = (string)($inputs[0] ?? '');
-                // Check if code has vowel counting logic
                 if (str_contains($code, 'return 0') && !str_contains($code, 'for') && !str_contains($code, 'count')) {
                     return 0;
                 }
